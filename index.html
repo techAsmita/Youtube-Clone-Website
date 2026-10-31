@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>YouTube.com Clone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,6 +12,7 @@
   <link rel="stylesheet" href="styles/general.css">
   <link rel="stylesheet" href="styles/sidebar.css">
   <link rel="stylesheet" href="styles/categorybuttons.css">
+  <link rel="stylesheet" href="styles/responsive.css">
   <link rel="icon" type="image/svg+xml" href="favicon-files/favicon.svg">
   <link rel="icon" type="image/x-icon" href="favicon-files/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-files/favicon-32.png">
@@ -20,7 +22,7 @@
 <body style="padding-top:132px;">
     <div class="header">
         <div class="left-section">
-            <img class="menu" src="thumbnails/hamburger-menu.svg">
+            <img class="menu" src="thumbnails/hamburger-menu.svg" alt="Menu" role="button" tabindex="0">
             <img class="youtube-logo" src="thumbnails/youtube-logo.svg">
         </div>
         <div class="middle-section">
@@ -98,6 +100,7 @@
         <button class="subs-button"><img class="subs-pic" src="thumbnails/d106187e-c859-4c64-97d7-dd058aec6ab8.jpeg"><span class="home-text">Rimorav Vlogs</span></button>
       </div>
     </div>
+    <div class="sidebar-backdrop"></div>
     <div class="category-container">
       <div class="category-buttons">
       <button class="all-button-style">All</button>
@@ -277,5 +280,21 @@
       </div>
     </div>
   </div>
+  <script>
+    // Hamburger: opens the sidebar as a drawer on phones/tablets,
+    // and hides/shows it on larger screens.
+    const menuButton = document.querySelector('.menu');
+    const backdrop = document.querySelector('.sidebar-backdrop');
+    const isSmallScreen = () => window.matchMedia('(max-width: 900px)').matches;
+
+    function toggleSidebar() {
+      document.body.classList.toggle(isSmallScreen() ? 'sidebar-open' : 'sidebar-hidden');
+    }
+    menuButton.addEventListener('click', toggleSidebar);
+    menuButton.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSidebar(); }
+    });
+    backdrop.addEventListener('click', () => document.body.classList.remove('sidebar-open'));
+  </script>
 </body>
 </html>

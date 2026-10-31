@@ -1,0 +1,166 @@
+/* ───────────────────────── Responsive + scroll fixes ─────────────────────────
+   Loaded last, so these rules adjust the desktop styles above for smaller
+   screens. The laptop layout (wider than 900px) is unchanged.            */
+
+/* No bounce / extra scroll past the top or bottom of the page */
+html,
+body {
+    overscroll-behavior: none;
+}
+
+/* Sidebar: scroll inside it on short screens instead of cutting off the
+   last subscriptions */
+.sidebar {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+/* Category chips: still swipe sideways, but without a visible scrollbar */
+.category-container {
+    scrollbar-width: none;
+}
+.category-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hamburger on large screens: hide the sidebar and give videos the space */
+body.sidebar-hidden {
+    padding-left: 24px;
+}
+body.sidebar-hidden .sidebar {
+    display: none;
+}
+body.sidebar-hidden .category-buttons {
+    margin-left: 0;
+}
+
+/* Backdrop behind the drawer (phones/tablets only) */
+.sidebar-backdrop {
+    display: none;
+}
+
+/* Very wide screens: 4 videos per row */
+@media (min-width: 1700px) {
+    .video-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ─── Tablets and phones ─── */
+@media (max-width: 900px) {
+    body {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    /* Sidebar becomes a slide-out drawer opened by the hamburger */
+    .sidebar {
+        top: 0;
+        width: 260px;
+        z-index: 10002;
+        transform: translateX(-100%);
+        transition: transform 0.2s ease;
+        box-shadow: 4px 0 16px rgba(0, 0, 0, 0.15);
+        padding-top: 8px;
+    }
+    body.sidebar-open .sidebar {
+        transform: translateX(0);
+    }
+    body.sidebar-open .sidebar-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 10001;
+    }
+    body.sidebar-open {
+        overflow: hidden;
+    }
+
+    .category-buttons {
+        margin-left: 0;
+    }
+    .all-button-style,
+    .cat-button-style {
+        margin-left: 6px;
+    }
+
+    /* Header: let the search bar shrink to fit */
+    .left-section {
+        margin-right: 16px;
+        flex-shrink: 0;
+    }
+    .middle-section {
+        flex: 1;
+        min-width: 0;
+    }
+    .search-bar-wrapper {
+        min-width: 0;
+    }
+    .search-bar {
+        width: 100%;
+        min-width: 0;
+    }
+    .right-section {
+        width: auto;
+        margin-left: 12px;
+        gap: 4px;
+    }
+
+    .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+        margin-right: 0;
+    }
+}
+
+/* ─── Phones ─── */
+@media (max-width: 600px) {
+    body {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    /* Header: logo + search icon + bell + profile, like the YouTube app */
+    .menu {
+        margin-left: 12px;
+    }
+    .youtube-logo {
+        margin-left: 12px;
+    }
+    .left-section {
+        margin-right: 0;
+    }
+    .middle-section {
+        justify-content: flex-end;
+    }
+    .search-bar,
+    .voice-wrap,
+    .create-button {
+        display: none;
+    }
+    .search-section {
+        border: none;
+        box-shadow: none;
+        flex: 0 0 auto;
+    }
+    .search-button {
+        width: 40px;
+        background-color: transparent;
+        border-left: none;
+    }
+    .right-section {
+        margin-left: 4px;
+    }
+    .notification {
+        margin-right: 16px;
+    }
+    .profile {
+        margin-right: 12px;
+    }
+
+    /* One video per row */
+    .video-grid {
+        grid-template-columns: 1fr;
+        row-gap: 24px;
+    }
+}
